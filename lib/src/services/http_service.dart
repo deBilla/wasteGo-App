@@ -4,9 +4,6 @@ import 'package:wastego/src/waste_item_feature/waste_item.dart';
 
 class HttpService {
   final String backendHost = "http://localhost:8080/";
-  final String wasteItemsURL = "http://localhost:8080/wasteItems";
-  final String deleteWasteItemURL = "http://localhost:8080/wasteItem/";
-  final String createWasteItemURL = "http://localhost:8080/wasteItem/";
 
   Future<List<WasteItem>> getWasteItems() async {
     Response res = await get(Uri.parse("${backendHost}wasteItems"));
