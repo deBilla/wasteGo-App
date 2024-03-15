@@ -43,7 +43,7 @@ class WasteGoApp extends StatelessWidget {
       // preferred ThemeMode (light, dark, or system default) from the
       // SettingsController to display the correct theme.
       theme: ThemeData(),
-      darkTheme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
 
       // Define a function to handle named routes in order to support
       // Flutter web url navigation and deep linking.

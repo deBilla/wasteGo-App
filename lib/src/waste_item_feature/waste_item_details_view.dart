@@ -14,7 +14,7 @@ class WasteItemDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Waste Item Details'),
+        title: Text('Waste Item ${item.name}'),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
@@ -35,11 +35,13 @@ class WasteItemDetailsView extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 10),
             Text(
-              'Waste Item: ${item.name}',
-              style: const TextStyle(fontSize: 24),
+              'Waste Type: ${item.type}',
+              style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 10),
             Text(

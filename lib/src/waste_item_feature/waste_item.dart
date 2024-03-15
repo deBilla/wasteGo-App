@@ -1,5 +1,5 @@
 class WasteItem {
-  final String id;
+  final int id;
   final String name;
   final String type;
   final int quantity;
@@ -22,10 +22,10 @@ class WasteItem {
 
   static getWasteItems() {
     return [
-      const WasteItem(id: '1', name: 'News Paper', type: 'paper', quantity: 3),
-      const WasteItem(id: '2', name: 'Soda can', type: 'metal', quantity: 4),
-      const WasteItem(id: '3', name: 'Hammer', type: 'metal', quantity: 5),
-      const WasteItem(id: '4', name: 'Milk Bottle', type: 'glass', quantity: 6)
+      const WasteItem(id: 1, name: 'News Paper', type: 'paper', quantity: 3),
+      const WasteItem(id: 2, name: 'Soda can', type: 'metal', quantity: 4),
+      const WasteItem(id: 3, name: 'Hammer', type: 'metal', quantity: 5),
+      const WasteItem(id: 4, name: 'Milk Bottle', type: 'glass', quantity: 6)
     ];
   }
 }
