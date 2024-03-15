@@ -1,0 +1,6 @@
+{
+  "appTitle": "wastego",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
