@@ -1,12 +1,48 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:wastego/src/services/http_service.dart';
+import 'package:wastego/src/waste_item_feature/waste_item_camera_view.dart';
 import 'package:wastego/src/waste_item_feature/waste_item_create_view.dart';
 import 'package:wastego/src/waste_item_feature/waste_item_details_view.dart';
 import 'waste_item.dart';
+import 'package:camera/camera.dart';
 
 class WasteItemListView extends StatelessWidget {
   final HttpService httpService = HttpService();
   WasteItemListView({super.key});
+
+  void _openCamera(BuildContext context) async {
+    final cameras = await availableCameras();
+    if (cameras.isEmpty) {
+      // Handle no available cameras
+      return;
+    }
+
+    final camera = cameras.first;
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CameraPreviewWidget(
+          camera: camera,
+          onImageCaptured: (File image) async {
+            // Handle the captured image here, for example, upload it
+            bool uploadSuccess = await httpService.uploadImage(image);
+            if (uploadSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Image uploaded successfully')),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Failed to upload image')),
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +50,12 @@ class WasteItemListView extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Waste Items'),
           actions: [
+            IconButton(
+              icon: const Icon(Icons.camera),
+              onPressed: () async {
+                _openCamera(context);
+              },
+            ),
             IconButton(
               icon: const Icon(Icons.add),
               onPressed: () async {
