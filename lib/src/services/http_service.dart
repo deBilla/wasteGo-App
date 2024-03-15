@@ -4,6 +4,7 @@ import 'package:wastego/src/waste_item_feature/waste_item.dart';
 
 class HttpService {
   final String wasteItemsURL = "http://localhost:8080/wasteItems";
+  final String deleteWasteItemURL = "http://localhost:8080/wasteItem/";
 
   Future<List<WasteItem>> getWasteItems() async {
     Response res = await get(Uri.parse(wasteItemsURL));
@@ -20,7 +21,19 @@ class HttpService {
 
       return wasteItems;
     } else {
-      throw "Unable to retrieve waste items.";
+      return [];
+    }
+  }
+
+  Future<bool> deleteWasteItem(id) async {
+    String url = deleteWasteItemURL + id;
+
+    Response res = await delete(Uri.parse(url));
+
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
