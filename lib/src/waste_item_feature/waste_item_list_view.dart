@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:wastego/src/services/http_service.dart';
+import 'package:wastego/src/waste_item_feature/result_screen.dart';
 import 'package:wastego/src/waste_item_feature/waste_item_camera_view.dart';
 import 'package:wastego/src/waste_item_feature/waste_item_create_view.dart';
 import 'package:wastego/src/waste_item_feature/waste_item_details_view.dart';
@@ -28,14 +29,23 @@ class WasteItemListView extends StatelessWidget {
           camera: camera,
           onImageCaptured: (File image) async {
             // Handle the captured image here, for example, upload it
-            bool uploadSuccess = await httpService.uploadImage(image);
-            if (uploadSuccess) {
+            List<dynamic> labels = await httpService.uploadImage(image);
+            if (labels.isNotEmpty) {
+              // ignore: use_build_context_synchronously
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultsScreen(detectedLabels: labels),
+                ),
+              );
+              // ignore: use_build_context_synchronously
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Image uploaded successfully')),
+                const SnackBar(content: Text('Image uploaded successfully')),
               );
             } else {
+              // ignore: use_build_context_synchronously
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Failed to upload image')),
+                const SnackBar(content: Text('Failed to upload image')),
               );
             }
           },
@@ -62,7 +72,7 @@ class WasteItemListView extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => WasteItemCreateView(),
+                    builder: (context) => WasteItemCreateView(labelName: '',),
                   ),
                 );
               },

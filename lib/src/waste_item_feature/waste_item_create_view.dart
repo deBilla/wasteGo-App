@@ -8,11 +8,15 @@ class WasteItemFormData {
   String type = '';
 }
 
+// ignore: must_be_immutable
 class WasteItemCreateView extends StatelessWidget {
   final HttpService httpService = HttpService();
-  final WasteItemFormData formData = WasteItemFormData();
+  WasteItemFormData formData = WasteItemFormData();
+  final String labelName;
 
-  WasteItemCreateView({Key? key}) : super(key: key);
+  WasteItemCreateView({Key? key, required this.labelName})
+      : formData = WasteItemFormData()..name = labelName,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +40,7 @@ class WasteItemCreateView extends StatelessWidget {
             children: [
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Name'),
+                initialValue: labelName,
                 onChanged: (value) {
                   formData.name = value;
                 },

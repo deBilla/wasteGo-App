@@ -58,7 +58,7 @@ class HttpService {
     }
   }
 
-  Future<bool> uploadImage(File image) async {
+  Future<List<dynamic>> uploadImage(File image) async {
     try {
       var request = MultipartRequest('POST', Uri.parse('${backendHost}wasteItem/uploadImage'));
       request.files.add(MultipartFile(
@@ -70,13 +70,21 @@ class HttpService {
       var response = await request.send();
       
       if (response.statusCode == 200) {
-        return true;
+        var jsonResponse = await response.stream.bytesToString();
+        var decodedResponse = jsonDecode(jsonResponse);
+
+        // Access the data from the JSON response
+        var data = decodedResponse['labels'];
+        var jsonDecodedData = jsonDecode(data);
+        var clarifai = jsonDecodedData['clarifai'];
+        var labels = clarifai['items'];
+        return labels;
       } else {
-        return false;
+        return [];
       }
     } catch (e) {
       print('Error uploading image: $e');
-      return false;
+      return [];
     }
   }
 }
