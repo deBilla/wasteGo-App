@@ -22,7 +22,7 @@ class WasteItemDetailsView extends StatelessWidget {
               bool isDeleted = await httpService.deleteWasteItem(item.id);
               if (isDeleted) {
                 // ignore: use_build_context_synchronously
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => WasteItemListView(),
@@ -31,6 +31,16 @@ class WasteItemDetailsView extends StatelessWidget {
               }
             },
           ),
+          IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WasteItemListView(),
+                  ),
+                );
+              }),
         ],
       ),
       body: Center(

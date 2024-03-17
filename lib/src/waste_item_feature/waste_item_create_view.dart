@@ -6,17 +6,30 @@ class WasteItemFormData {
   String name = '';
   int quantity = 0;
   String type = '';
+
+  WasteItemFormData({required this.type});
 }
 
-// ignore: must_be_immutable
-class WasteItemCreateView extends StatelessWidget {
-  final HttpService httpService = HttpService();
-  WasteItemFormData formData = WasteItemFormData();
+class WasteItemCreateView extends StatefulWidget {
   final String labelName;
 
-  WasteItemCreateView({Key? key, required this.labelName})
-      : formData = WasteItemFormData()..name = labelName,
-        super(key: key);
+  const WasteItemCreateView({Key? key, required this.labelName})
+      : super(key: key);
+
+  @override
+  WasteItemCreateViewState createState() => WasteItemCreateViewState();
+}
+
+class WasteItemCreateViewState extends State<WasteItemCreateView> {
+  final HttpService httpService = HttpService();
+  late WasteItemFormData formData;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    formData = WasteItemFormData(type: widget.labelName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,67 +39,102 @@ class WasteItemCreateView extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            onPressed: _handleCloseButtonPressed,
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Name'),
-                initialValue: labelName,
-                onChanged: (value) {
-                  formData.name = value;
-                },
-              ),
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Type'),
-                onChanged: (value) {
-                  formData.type = value;
-                },
-              ),
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Quantity'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  formData.quantity = int.tryParse(value) ?? 0;
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  bool isCreated = await httpService.createWasteItem(
-                      formData.name, formData.type, formData.quantity);
-                  // ignore: duplicate_ignore
-                  if (isCreated) {
-                    // ignore: use_build_context_synchronously
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => WasteItemListView(),
-                      ),
-                    );
-                  } else {
-                    // ignore: use_build_context_synchronously
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Failed to create waste item.'),
-                      ),
-                    );
-                  }
-                },
-                child: const Text('Create'),
-              ),
-            ],
-          ),
+      body: isLoading ? _buildLoadingIndicator() : _buildForm(),
+    );
+  }
+
+  Widget _buildForm() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Name'),
+              onChanged: _handleNameChanged,
+            ),
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Type'),
+              initialValue: widget.labelName,
+              onChanged: _handleTypeChanged,
+            ),
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Quantity'),
+              keyboardType: TextInputType.number,
+              onChanged: _handleQuantityChanged,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _handleCreateButtonPressed,
+              child: const Text('Create'),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  void _handleNameChanged(String value) {
+    formData.name = value;
+  }
+
+  void _handleTypeChanged(String value) {
+    formData.type = value;
+  }
+
+  void _handleQuantityChanged(String value) {
+    formData.quantity = int.tryParse(value) ?? 0;
+  }
+
+  void _handleCreateButtonPressed() async {
+    setState(() {
+      isLoading = true;
+    });
+    bool isCreated = await _createWasteItem();
+    setState(() {
+      isLoading = false;
+    });
+    if (isCreated) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => WasteItemListView(),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to create waste item.'),
+        ),
+      );
+    }
+  }
+
+  Future<bool> _createWasteItem() async {
+    return httpService.createWasteItem(
+      formData.name,
+      formData.type,
+      formData.quantity,
+    );
+  }
+
+  void _handleCloseButtonPressed() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WasteItemListView(),
+      ),
+    );
+  }
+
+  Widget _buildLoadingIndicator() {
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

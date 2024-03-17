@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:wastego/src/services/http_service.dart';
-import 'package:wastego/src/waste_item_feature/result_screen.dart';
-import 'package:wastego/src/waste_item_feature/waste_item_camera_view.dart';
+import 'package:wastego/src/waste_item_feature/waste_item_label_result_view.dart';
+import 'package:wastego/src/custome_widgets/camera_preview_widget.dart';
 import 'package:wastego/src/waste_item_feature/waste_item_create_view.dart';
 import 'package:wastego/src/waste_item_feature/waste_item_details_view.dart';
 import 'waste_item.dart';
@@ -22,7 +22,7 @@ class WasteItemListView extends StatelessWidget {
 
     final camera = cameras.first;
     // ignore: use_build_context_synchronously
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => CameraPreviewWidget(
@@ -32,10 +32,10 @@ class WasteItemListView extends StatelessWidget {
             List<dynamic> labels = await httpService.uploadImage(image);
             if (labels.isNotEmpty) {
               // ignore: use_build_context_synchronously
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ResultsScreen(detectedLabels: labels),
+                  builder: (context) => WasteItemLabelResultView(detectedLabels: labels),
                 ),
               );
               // ignore: use_build_context_synchronously
@@ -69,10 +69,10 @@ class WasteItemListView extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.add),
               onPressed: () async {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => WasteItemCreateView(labelName: '',),
+                    builder: (context) => const WasteItemCreateView(labelName: '',),
                   ),
                 );
               },
@@ -101,7 +101,7 @@ class WasteItemListView extends StatelessWidget {
                               AssetImage('assets/images/flutter_logo.png'),
                         ),
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>

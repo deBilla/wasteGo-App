@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wastego/src/waste_item_feature/waste_item_create_view.dart';
 
-class ResultsScreen extends StatelessWidget {
+class WasteItemLabelResultView extends StatelessWidget {
   final List<dynamic> detectedLabels;
 
-  const ResultsScreen({Key? key, required this.detectedLabels})
+  const WasteItemLabelResultView({Key? key, required this.detectedLabels})
       : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class ResultsScreen extends StatelessWidget {
             subtitle: Text('Confidence: ${label['confidence']}'),
             onTap: () {
               // Navigate to WasteItemCreateView with labelName as the name
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => WasteItemCreateView(
