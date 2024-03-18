@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 import 'package:wastego/src/waste_item_feature/waste_item.dart';
 
 class HttpService {
-  final String backendHost = "https://6792-2406-3003-2003-19dd-2533-3c36-8144-e32c.ngrok-free.app/";
+  final String backendHost = "https://wastego-api.onrender.com/";
 
   Future<List<WasteItem>> getWasteItems() async {
     Response res = await get(Uri.parse("${backendHost}wasteItems"));
