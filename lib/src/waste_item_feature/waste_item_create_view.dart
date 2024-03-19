@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in_platform_interface/google_sign_in_platform_interface.dart';
+import 'package:wastego/src/home_page_view.dart';
 import 'package:wastego/src/services/http_service.dart';
-import 'package:wastego/src/waste_item_feature/waste_item_list_view.dart';
 
 class WasteItemFormData {
   String name = '';
@@ -12,8 +13,9 @@ class WasteItemFormData {
 
 class WasteItemCreateView extends StatefulWidget {
   final String labelName;
+  final GoogleSignInUserData? currentUser;
 
-  const WasteItemCreateView({Key? key, required this.labelName})
+  const WasteItemCreateView({Key? key, required this.labelName, required this.currentUser})
       : super(key: key);
 
   @override
@@ -103,7 +105,7 @@ class WasteItemCreateViewState extends State<WasteItemCreateView> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => WasteItemListView(),
+          builder: (context) => HomePageView(),
         ),
       );
     } else {
@@ -117,6 +119,7 @@ class WasteItemCreateViewState extends State<WasteItemCreateView> {
 
   Future<bool> _createWasteItem() async {
     return httpService.createWasteItem(
+      widget.currentUser!.id,
       formData.name,
       formData.type,
       formData.quantity,
@@ -127,7 +130,7 @@ class WasteItemCreateViewState extends State<WasteItemCreateView> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => WasteItemListView(),
+        builder: (context) => const HomePageView(),
       ),
     );
   }

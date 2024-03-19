@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:wastego/src/waste_item_feature/waste_item_list_view.dart';
+import 'package:wastego/src/home_page_view.dart';
 
 class CameraPreviewWidget extends StatefulWidget {
   final CameraDescription camera;
@@ -118,7 +118,7 @@ class CameraPreviewWidgetState extends State<CameraPreviewWidget> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => WasteItemListView(),
+        builder: (context) => HomePageView(),
       ),
     );
   }

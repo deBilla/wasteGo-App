@@ -49,5 +49,19 @@
 	<string>your usage description here</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>your usage description here</string>
+	<key>GIDClientID</key>
+	<string>1064264326395-siteh7p76f8ckvkg0pigpjaimfvcefda.apps.googleusercontent.com</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<!-- Replace "com.googleusercontent.apps.YOUR_REVERSE_CLIENT_ID" with your actual REVERSE_CLIENT_ID -->
+				<string>com.googleusercontent.apps.1064264326395-siteh7p76f8ckvkg0pigpjaimfvcefda</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

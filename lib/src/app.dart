@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:wastego/src/waste_item_feature/waste_item_list_view.dart';
+import 'package:wastego/src/home_page_view.dart';
 
 /// The Widget that configures your application.
 class WasteGoApp extends StatelessWidget {
@@ -53,7 +53,7 @@ class WasteGoApp extends StatelessWidget {
           builder: (BuildContext context) {
             switch (routeSettings.name) {
               default:
-                return WasteItemListView();
+                return const HomePageView();
             }
           },
         );

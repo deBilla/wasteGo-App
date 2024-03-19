@@ -6,8 +6,8 @@ import 'package:wastego/src/waste_item_feature/waste_item.dart';
 class HttpService {
   final String backendHost = "https://wastego-api.onrender.com/";
 
-  Future<List<WasteItem>> getWasteItems() async {
-    Response res = await get(Uri.parse("${backendHost}wasteItems"));
+  Future<List<WasteItem>> getWasteItems(String userId) async {
+    Response res = await get(Uri.parse("${backendHost}wasteItems/$userId"));
  
     if (res.statusCode == 200) {
       final obj = jsonDecode(res.body);
@@ -38,16 +38,17 @@ class HttpService {
     }
   }
 
-  Future<bool> createWasteItem(String name, String type, int quantity) async {
+  Future<bool> createWasteItem(String userId, String name, String type, int quantity) async {
     Response res = await post(
       Uri.parse('${backendHost}wasteItem'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode({
-        'Name': name,
-        'Type': type,
-        'Quantity': quantity,
+        'name': name,
+        'type': type,
+        'quantity': quantity,
+        'user_id': userId,
       }),
     );
 

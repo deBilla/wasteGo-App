@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wastego/src/home_page_view.dart';
 import 'package:wastego/src/services/http_service.dart';
 import 'package:wastego/src/waste_item_feature/waste_item.dart';
-import 'package:wastego/src/waste_item_feature/waste_item_list_view.dart';
 
 /// Displays detailed information about a SampleItem.
 class WasteItemDetailsView extends StatelessWidget {
@@ -25,7 +25,7 @@ class WasteItemDetailsView extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => WasteItemListView(),
+                    builder: (context) => HomePageView(),
                   ),
                 );
               }
@@ -37,7 +37,7 @@ class WasteItemDetailsView extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => WasteItemListView(),
+                    builder: (context) => HomePageView(),
                   ),
                 );
               }),
@@ -56,6 +56,10 @@ class WasteItemDetailsView extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               'Quantity: ${item.quantity}',
+              style: const TextStyle(fontSize: 20),
+            ),
+            Text(
+              'User ID: ${item.userId}',
               style: const TextStyle(fontSize: 20),
             ),
           ],
