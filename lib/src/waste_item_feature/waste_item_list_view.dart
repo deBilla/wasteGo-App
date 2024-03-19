@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:wastego/src/services/http_service.dart';
 import 'package:wastego/src/waste_item_feature/waste_item_label_result_view.dart';
-import 'package:wastego/src/custome_widgets/camera_preview_widget.dart';
+import 'package:wastego/src/custom_widgets/camera_preview_widget.dart';
 import 'package:wastego/src/waste_item_feature/waste_item_create_view.dart';
 import 'package:wastego/src/waste_item_feature/waste_item_details_view.dart';
 import 'waste_item.dart';
