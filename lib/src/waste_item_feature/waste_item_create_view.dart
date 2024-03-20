@@ -7,15 +7,17 @@ class WasteItemFormData {
   String name = '';
   int quantity = 0;
   String type = '';
+  String imageUrl = '';
 
-  WasteItemFormData({required this.type});
+  WasteItemFormData({required this.type, required this.imageUrl});
 }
 
 class WasteItemCreateView extends StatefulWidget {
   final String labelName;
+  final String imageUrl;
   final GoogleSignInUserData? currentUser;
 
-  const WasteItemCreateView({Key? key, required this.labelName, required this.currentUser})
+  const WasteItemCreateView({Key? key, required this.labelName, required this.currentUser, required this.imageUrl})
       : super(key: key);
 
   @override
@@ -30,7 +32,7 @@ class WasteItemCreateViewState extends State<WasteItemCreateView> {
   @override
   void initState() {
     super.initState();
-    formData = WasteItemFormData(type: widget.labelName);
+    formData = WasteItemFormData(type: widget.labelName, imageUrl: widget.imageUrl);
   }
 
   @override
@@ -70,6 +72,11 @@ class WasteItemCreateViewState extends State<WasteItemCreateView> {
               keyboardType: TextInputType.number,
               onChanged: _handleQuantityChanged,
             ),
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Image URL'),
+              initialValue: widget.imageUrl,
+              onChanged: _handleImageUrlChanged,
+            ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _handleCreateButtonPressed,
@@ -87,6 +94,10 @@ class WasteItemCreateViewState extends State<WasteItemCreateView> {
 
   void _handleTypeChanged(String value) {
     formData.type = value;
+  }
+
+  void _handleImageUrlChanged(String value) {
+    formData.imageUrl = value;
   }
 
   void _handleQuantityChanged(String value) {
@@ -123,6 +134,7 @@ class WasteItemCreateViewState extends State<WasteItemCreateView> {
       formData.name,
       formData.type,
       formData.quantity,
+      formData.imageUrl,
     );
   }
 

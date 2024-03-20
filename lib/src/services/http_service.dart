@@ -38,7 +38,7 @@ class HttpService {
     }
   }
 
-  Future<bool> createWasteItem(String userId, String name, String type, int quantity) async {
+  Future<bool> createWasteItem(String userId, String name, String type, int quantity, String imageUrl) async {
     Response res = await post(
       Uri.parse('${backendHost}wasteItem'),
       headers: <String, String>{
@@ -49,6 +49,7 @@ class HttpService {
         'type': type,
         'quantity': quantity,
         'user_id': userId,
+        'img_url': imageUrl,
       }),
     );
 
@@ -59,7 +60,7 @@ class HttpService {
     }
   }
 
-  Future<List<dynamic>> uploadImage(File image) async {
+  Future<UploadResponse> uploadImage(File image) async {
     try {
       var request = MultipartRequest('POST', Uri.parse('${backendHost}wasteItem/uploadImage'));
       request.files.add(MultipartFile(
@@ -76,16 +77,24 @@ class HttpService {
 
         // Access the data from the JSON response
         var data = decodedResponse['labels'];
+        var imgUrl = decodedResponse['img_url'];
         var jsonDecodedData = jsonDecode(data);
         var clarifai = jsonDecodedData['clarifai'];
         var labels = clarifai['items'];
-        return labels;
+        return UploadResponse(labels: labels, imgUrl: imgUrl);
       } else {
-        return [];
+        return UploadResponse(labels: [], imgUrl: '');
       }
     } catch (e) {
       print('Error uploading image: $e');
-      return [];
+      return UploadResponse(labels: [], imgUrl: '');
     }
   }
+}
+
+class UploadResponse {
+  final List<dynamic> labels;
+  final String imgUrl;
+
+  UploadResponse({required this.labels, required this.imgUrl});
 }

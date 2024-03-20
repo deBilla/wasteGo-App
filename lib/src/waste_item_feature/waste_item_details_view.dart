@@ -62,6 +62,27 @@ class WasteItemDetailsView extends StatelessWidget {
               'User ID: ${item.userId}',
               style: const TextStyle(fontSize: 20),
             ),
+            const SizedBox(height: 20),
+            Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Image.network(
+                item.imageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Placeholder(
+                    fallbackWidth: 200,
+                    fallbackHeight: 200,
+                    color: Colors
+                        .grey,
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),

@@ -91,13 +91,13 @@ class HomePageState extends State<HomePageView> {
           camera: camera,
           onImageCaptured: (File image) async {
             // Handle the captured image here, for example, upload it
-            List<dynamic> labels = await httpService.uploadImage(image);
-            if (labels.isNotEmpty) {
+            UploadResponse uploadResponse = await httpService.uploadImage(image);
+            if (uploadResponse.labels.isNotEmpty) {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      WasteItemLabelResultView(detectedLabels: labels, currentUser: _currentUser,),
+                      WasteItemLabelResultView(uploadResponse: uploadResponse, currentUser: _currentUser,),
                 ),
               );
               ScaffoldMessenger.of(context).showSnackBar(
@@ -136,6 +136,7 @@ class HomePageState extends State<HomePageView> {
                         builder: (context) => WasteItemCreateView(
                           labelName: '',
                           currentUser: _currentUser,
+                          imageUrl: '',
                         ),
                       ),
                     );
