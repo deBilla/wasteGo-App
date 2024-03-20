@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in_platform_interface/google_sign_in_platform_interface.dart';
+import 'package:wastego/src/ads/ad_widget.dart';
 import 'package:wastego/src/services/http_service.dart';
 import 'package:wastego/src/waste_item_feature/waste_item_label_result_view.dart';
 import 'package:wastego/src/custom_widgets/camera_preview_widget.dart';
@@ -163,6 +164,7 @@ class HomePageState extends State<HomePageView> {
                     onPressed: _handleSignIn,
                     child: const Text('SIGN IN'),
                   ),
+                  MyBannerAdWidget(),
                 ],
               ),
             ),
