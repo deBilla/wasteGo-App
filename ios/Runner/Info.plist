@@ -51,6 +51,8 @@
 	<string>your usage description here</string>
 	<key>GIDClientID</key>
 	<string>1064264326395-siteh7p76f8ckvkg0pigpjaimfvcefda.apps.googleusercontent.com</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need camera access to take pictures.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
